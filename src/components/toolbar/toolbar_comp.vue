@@ -1,7 +1,7 @@
 <template>
     <div>
         <el-menu router :default-active="this.$route.path" class="el-menu-demo" mode="horizontal"
-            background-color="#545c64" text-color="#fff" active-text-color="#ffd04b">
+            >
             <el-menu-item index="/movie">
                 <i>电影</i>
             </el-menu-item>
