@@ -1,6 +1,6 @@
 <template>
     <div>
-        <el-menu router :default-active="this.$route.path" class="el-menu-demo" mode="horizontal">
+        <el-menu router :default-active="defaultActive" class="el-menu-demo" mode="horizontal" @select="handleSelect">
             <el-menu-item index="/movie">
                 <i>电影</i>
             </el-menu-item>
@@ -24,8 +24,17 @@
             }
         },
         methods: {
-
+            handleSelect(key){
+                console.log(key);
+            }
         },
+        computed: {
+            //获取当前路由渲染页面菜单
+            defaultActive() {
+                console.log(this.$route.path);
+                return this.$route.path;
+            }
+        }
     }
 </script>
 
