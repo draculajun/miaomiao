@@ -10,12 +10,9 @@ export default new Vuex.Store({
       personTableCurrentPage: '',
       personid: '',
     },
-    sumTotal: 0
   },
   mutations: {
-    add(state, n){
-      state.sumTotal = state.sumTotal + parseInt(n);
-    }
+    
   },
   actions: {
 

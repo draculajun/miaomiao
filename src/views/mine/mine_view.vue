@@ -3,7 +3,7 @@
         <Header title='我的'></Header>
         <Toolbar></Toolbar>
         <br>
-
+        {{getPersonid}} <!-- 存放从state中获得的personid，用于查询详单 -->
         <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
             <el-form-item label="姓名" prop="name">
                 <el-input ref="relFormid" v-if="false" v-model="ruleForm.id"></el-input>
@@ -101,15 +101,22 @@
             }
         },
         created() {
-            if (this.$store.state.personInfo.personid != 0) {
-                this.axios.get(`http://localhost:8081/person/${this.$store.state.personInfo.personid}`).then((
-                    response) => {
+
+        },
+        computed: {
+            //监听$store.state.personInfo.personid，有变动则调用接口查询Person详单（aaa其实用不着，但是在界面必须{{aaa}}定义，否则无法监听）
+            getPersonid() {
+                let id = this.$store.state.personInfo.personid;
+                if (id) {
+                    this.axios.get(`http://localhost:8081/person/${this.$store.state.personInfo.personid}`).then((
+                        response) => {
                         this.ruleForm = response.data.data;
                     }).catch((response) => {
-                    console.log(response);
-                })
+                        console.log(response);
+                    })
+                }
             }
-        }
+        },
 
     }
 </script>
