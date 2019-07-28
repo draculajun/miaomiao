@@ -14,6 +14,8 @@ Vue.config.productionTip = false
 
 Vue.use(ElementUI);
 
+export const eventBus = new Vue();
+
 new Vue({
   router,
   store,

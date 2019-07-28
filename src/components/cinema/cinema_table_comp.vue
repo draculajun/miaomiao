@@ -17,7 +17,7 @@
             </el-table-column>
             <el-table-column label="操作">
                 <template slot-scope="scope">
-                    <el-button @click="handleClick(scope.row)" type="text" size="small">查看</el-button>
+                    <el-button @click="queryPersonDetail(scope.row)" type="text" size="small">查看</el-button>
                     <el-button type="text" size="small">编辑</el-button>
                 </template>
             </el-table-column>
@@ -31,6 +31,13 @@
 </template>
 
 <script>
+    import {
+        eventBus
+    } from '@/main.js'
+    import {
+        setTimeout
+    } from 'timers';
+
     export default {
         name: 'cinema',
 
@@ -40,15 +47,13 @@
                 currentPage: 1,
                 pageSize: 2,
                 total: 0,
-                pageSizes: [2, 4]
+                pageSizes: [2, 4],
+                personInfo: {
+                    personid: ''
+                }
             }
         },
         methods: {
-            handleClick(row) {
-                alert(({
-                    ...row
-                }).name);
-            },
             handleSizeChange(val) {
                 this.pageSize = val;
                 this.queryTable();
@@ -65,11 +70,26 @@
                 this.axios.post(`http://localhost:8081/person/page/`, params).then((response) => {
                     this.tableData = response.data.data.pageData;
                     this.total = response.data.data.total;
-                    console.log(this.total);
                 }).catch((response) => {
                     console.log(response);
                 })
+            },
+            queryPersonDetail(row) {
+                this.personInfo.personid = ({
+                    ...row
+                }).id;
+                this.$store.state.personInfo.personid = this.personInfo.personid;
+                this.$router.push("/mine");
             }
+        },
+        destroyed() {
+            this.$store.state.personInfo.personTableCurrentPage = this.currentPage;
+            this.$store.state.personInfo.personTablePageSize = this.pageSize;
+        },
+        created() {
+            this.currentPage = this.$store.state.personInfo.personTableCurrentPage || this.currentPage;
+            this.pageSize = this.$store.state.personInfo.personTablePageSize || this.pageSize;
+            this.queryTable();
         },
         export: 'cinemaTable'
     }
