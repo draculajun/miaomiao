@@ -2,6 +2,10 @@
     <div>
         <el-button type="primary" @click="addPerson">新增</el-button>
         <el-button type="primary" @click="queryTable">查询</el-button>
+        <div>
+            <el-button @click="add">+</el-button>&nbsp;
+            <el-input style="width: 50%" v-model="num" placeholder=""></el-input>&nbsp; {{this.sumTotal}}
+        </div>
         <p></p>
         <el-table :data="tableData" stripe border style="width: 100%">
             <el-table-column fixed prop="date" label="日期">
@@ -51,7 +55,8 @@
                 pageSizes: [2, 4],
                 personInfo: {
                     personid: ''
-                }
+                },
+                num: '',
             }
         },
         methods: {
@@ -85,6 +90,9 @@
             addPerson(){
                 this.$store.state.personInfo.personid = '';
                 this.$router.push('/mine');
+            },
+            add(){
+                this.$store.commit('add', this.num);
             }
         },
         destroyed() {
@@ -95,6 +103,11 @@
             this.currentPage = this.$store.state.personInfo.personTableCurrentPage || this.currentPage;
             this.pageSize = this.$store.state.personInfo.personTablePageSize || this.pageSize;
             this.queryTable();
+        },
+        computed:{
+            sumTotal() {
+                return this.$store.state.sumTotal;
+            }
         },
         export: 'cinemaTable'
     }

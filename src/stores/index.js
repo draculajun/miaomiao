@@ -8,11 +8,14 @@ export default new Vuex.Store({
     personInfo:{
       personTablePageSize: '',
       personTableCurrentPage: '',
-      personid: ''
-    }
+      personid: '',
+    },
+    sumTotal: 0
   },
   mutations: {
-
+    add(state, n){
+      state.sumTotal = state.sumTotal + parseInt(n);
+    }
   },
   actions: {
 
