@@ -24,7 +24,7 @@
                 </el-col>
             </el-form-item>
             <el-form-item>
-                <el-button type="primary" @click="submitForm('ruleForm')">立即创建</el-button>
+                <el-button type="primary" v-if="!ruleForm.id" @click="submitForm('ruleForm')">立即创建</el-button>
                 <el-button @click="resetForm('ruleForm')">重置</el-button>
             </el-form-item>
         </el-form>
@@ -52,6 +52,7 @@
             return {
                 detail: '',
                 ruleForm: {
+                    id: '',
                     name: '',
                     city: '',
                     date: '',
@@ -87,7 +88,7 @@
             submitForm(formName) {
                 this.$refs[formName].validate((valid) => {
                     if (valid) {
-                        alert(this.$refs.relFormid);
+                        alert(this.$refs.formName);
                         alert('submit!');
                     } else {
                         console.log('error submit!!');

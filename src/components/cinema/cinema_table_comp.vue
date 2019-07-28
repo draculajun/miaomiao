@@ -1,5 +1,6 @@
 <template>
     <div>
+        <el-button type="primary" @click="addPerson">新增</el-button>
         <el-button type="primary" @click="queryTable">查询</el-button>
         <p></p>
         <el-table :data="tableData" stripe border style="width: 100%">
@@ -80,6 +81,10 @@
                 }).id;
                 this.$store.state.personInfo.personid = this.personInfo.personid;
                 this.$router.push("/mine");
+            },
+            addPerson(){
+                this.$store.state.personInfo.personid = '';
+                this.$router.push('/mine');
             }
         },
         destroyed() {
