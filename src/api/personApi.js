@@ -10,8 +10,23 @@ const PersonApi = {
     person(id) {
         let url = `http://localhost:8082/person/${id}`;
         return BaseApi.get(url);
-    }
-    
+    },
+
+    insert(params){
+        let url = 'http://localhost:8082/person/';
+        return BaseApi.post(url, params);
+    },
+
+    update(params){
+        let url = 'http://localhost:8082/person/';
+        return BaseApi.put(url, params);
+    },
+
+    delete(id) {
+        let url = `http://localhost:8082/person/${id}`;
+        return BaseApi.delete(url);
+    },
+
 
 }
 

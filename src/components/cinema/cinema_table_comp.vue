@@ -1,6 +1,5 @@
 <template>
     <div>
-        <el-button type="primary" @click="addPerson">新增</el-button>
         <el-button type="primary" @click="queryTable">查询</el-button>
         <p></p>
         <el-table :data="tableData" stripe style="width: 100%">
@@ -19,7 +18,7 @@
             <el-table-column label="操作">
                 <template slot-scope="scope">
                     <el-button @click="queryPersonDetail(scope.row)" type="text" size="small">查看</el-button>
-                    <el-button type="text" size="small">编辑</el-button>
+                    <el-button @click="deletePerson(scope.row)" type="text" size="small">删除</el-button>
                 </template>
             </el-table-column>
         </el-table>
@@ -85,9 +84,11 @@
                 this.$store.state.personInfo.personid = this.personInfo.personid;
                 this.$router.push("/mine");
             },
-            addPerson() {
-                this.$store.state.personInfo.personid = '';
-                this.$router.push('/mine');
+            deletePerson(row){
+                PersonApi.delete(({...row}).id).then(responseBody=>{
+                    this.$message('删除成功');
+                    this.queryTable();
+                })
             },
             formatCity(row, column) {
                 let city = row[column.property];

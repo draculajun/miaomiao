@@ -6,16 +6,15 @@
         {{getPersonid}}
         <!-- 存放从state中获得的personid，用于查询详单 -->
         <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
+            <el-form-item label="编号" prop="id" hidden>
+                <el-input v-model="ruleForm.id" style="width: 30%;"></el-input>
+            </el-form-item>
             <el-form-item label="姓名" prop="name">
-                <el-input ref="relFormid" v-if="false" v-model="ruleForm.id"></el-input>
                 <el-input v-model="ruleForm.name" style="width: 30%;"></el-input>
             </el-form-item>
             <el-form-item label="省份" prop="city">
                 <el-select v-model="ruleForm.city" placeholder="请选择省份">
-                    <el-option v-for="item in cityDomainalnList" 
-                        :label="item.desc" 
-                        :value="item.name" 
-                        :key="item.name">
+                    <el-option v-for="item in cityDomainalnList" :label="item.desc" :value="item.name" :key="item.name">
                     </el-option>
                 </el-select>
             </el-form-item>
@@ -28,7 +27,8 @@
                 </el-col>
             </el-form-item>
             <el-form-item>
-                <el-button type="primary" v-if="!ruleForm.id" @click="submitForm('ruleForm')">立即创建</el-button>
+                <el-button type="primary" @click="addPerson">新增</el-button>
+                <el-button type="primary" @click="submitForm('ruleForm')">保存</el-button>
                 <el-button @click="resetForm('ruleForm')">重置</el-button>
             </el-form-item>
         </el-form>
@@ -64,6 +64,10 @@
                     date: '',
                 },
                 rules: {
+                    id: [{
+                        required: false,
+                        trigger: 'blur'
+                    }],
                     name: [{
                             required: true,
                             message: '请输入姓名',
@@ -82,7 +86,7 @@
                         trigger: 'change'
                     }],
                     date: [{
-                        type: 'date',
+                        type: 'string',
                         required: true,
                         message: '请选择日期',
                         trigger: 'change'
@@ -94,8 +98,17 @@
             submitForm(formName) {
                 this.$refs[formName].validate((valid) => {
                     if (valid) {
-                        alert(this.$refs.formName);
-                        alert('submit!');
+                        if (this.ruleForm.id) {
+                            PersonApi.update(this.ruleForm).then(responseBody => {
+                                this.ruleForm.id = responseBody;
+                                this.$message('更新成功');
+                            });
+                        } else {
+                            PersonApi.insert(this.ruleForm).then(responseBody => {
+                                this.ruleForm.id = responseBody;
+                                this.$message('新增成功');
+                            });
+                        }
                     } else {
                         console.log('error submit!!');
                         return false;
@@ -104,10 +117,14 @@
             },
             resetForm(formName) {
                 this.$refs[formName].resetFields();
-            }
+            },
+            addPerson() {
+                this.$refs['ruleForm'].resetFields();
+            },
         },
         created() {
             this.cityDomainalnList = this.$store.state.cityDomainalnList;
+            this.$refs.ruleForm.resetFields();
         },
         computed: {
             //监听$store.state.personInfo.personid，有变动则调用接口查询Person详单（aaa其实用不着，但是在界面必须{{aaa}}定义，否则无法监听）
@@ -116,12 +133,10 @@
                 if (id) {
                     PersonApi.person(id).then(responseBody => {
                         this.ruleForm = responseBody;
+                        console.log(this.$refs.relFormid);
                     });
-                } else {
-                    if (this.$refs.ruleForm) {
-                        this.$refs.ruleForm.resetFields();
-                    }
                 }
+
             }
         },
 
