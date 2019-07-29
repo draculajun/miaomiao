@@ -12,8 +12,11 @@
             </el-form-item>
             <el-form-item label="省份" prop="city">
                 <el-select v-model="ruleForm.city" placeholder="请选择省份">
-                    <el-option label="区域一" value="shanghai"></el-option>
-                    <el-option label="区域二" value="beijing"></el-option>
+                    <el-option v-for="item in cityDomainalnList" 
+                        :label="item.desc" 
+                        :value="item.name" 
+                        :key="item.name">
+                    </el-option>
                 </el-select>
             </el-form-item>
             <el-form-item label="生日" required>
@@ -52,6 +55,7 @@
         },
         data() {
             return {
+                cityDomainalnList: [],
                 detail: '',
                 ruleForm: {
                     id: '',
@@ -103,7 +107,7 @@
             }
         },
         created() {
-
+            this.cityDomainalnList = this.$store.state.cityDomainalnList;
         },
         computed: {
             //监听$store.state.personInfo.personid，有变动则调用接口查询Person详单（aaa其实用不着，但是在界面必须{{aaa}}定义，否则无法监听）

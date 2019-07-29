@@ -10,7 +10,7 @@
             </el-table-column>
             <el-table-column prop="area" label="省份">
             </el-table-column>
-            <el-table-column prop="city" label="市区">
+            <el-table-column prop="city" :formatter="formatCity" label="市区">
             </el-table-column>
             <el-table-column prop="address" label="地址">
             </el-table-column>
@@ -89,6 +89,17 @@
                 this.$store.state.personInfo.personid = '';
                 this.$router.push('/mine');
             },
+            formatCity(row, column) {
+                let city = row[column.property];
+                let desc = '';
+                this.$store.state.cityDomainalnList.forEach(element => {
+                    if (city == element.name) {
+                        desc = element.desc;
+                        return;
+                    }
+                });
+                return desc;
+            }
         },
         destroyed() {
 
@@ -97,7 +108,7 @@
 
             let params = {};
             CityApi.cities(params).then(responseBody => {
-                console.log(responseBody);
+                this.$store.state.cityDomainalnList = responseBody;
             })
 
             this.queryTable();

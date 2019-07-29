@@ -10,10 +10,7 @@ export default new Vuex.Store({
       personTableCurrentPage: '',
       personid: '',
     },
-    cityDomainaln: {
-      name: '',
-      desc: '',
-    }
+    cityDomainalnList: []
   },
   mutations: {
 
