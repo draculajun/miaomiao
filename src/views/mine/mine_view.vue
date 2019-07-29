@@ -40,6 +40,7 @@
     import {
         eventBus
     } from '@/main.js'
+    import PersonApi from '@/api/personApi.js'
 
     export default {
         name: 'mine',
@@ -108,12 +109,9 @@
             getPersonid() {
                 let id = this.$store.state.personInfo.personid;
                 if (id) {
-                    this.axios.get(`http://localhost:8081/person/${this.$store.state.personInfo.personid}`).then((
-                        response) => {
-                        this.ruleForm = response.data.data;
-                    }).catch((response) => {
-                        console.log(response);
-                    })
+                    PersonApi.person(id).then(responseBody => {
+                        this.ruleForm = responseBody;
+                    });
                 }
             }
         },

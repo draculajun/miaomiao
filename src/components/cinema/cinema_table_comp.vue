@@ -35,9 +35,12 @@
     import {
         eventBus
     } from '@/main.js'
+
     import {
         setTimeout
-    } from 'timers';
+    } from 'timers'
+
+    import PersonApi from '@/api/personApi.js'
 
     export default {
         name: 'cinema',
@@ -69,12 +72,10 @@
                     'currentPage': this.currentPage,
                     'pageSize': this.pageSize,
                 }
-                this.axios.post(`http://localhost:8081/person/page/`, params).then((response) => {
-                    this.tableData = response.data.data.pageData;
-                    this.total = response.data.data.total;
-                }).catch((response) => {
-                    console.log(response);
-                })
+                PersonApi.page(params).then(responseBody => {
+                    this.tableData = responseBody.pageData;
+                    this.total = responseBody.total;
+                });
             },
             queryPersonDetail(row) {
                 this.personInfo.personid = ({
@@ -83,19 +84,23 @@
                 this.$store.state.personInfo.personid = this.personInfo.personid;
                 this.$router.push("/mine");
             },
-            addPerson(){
+            addPerson() {
                 this.$store.state.personInfo.personid = '';
                 this.$router.push('/mine');
             },
         },
         destroyed() {
-            
+
         },
         created() {
+
+
+
             this.queryTable();
+
         },
-        computed:{
-            
+        computed: {
+
         },
         export: 'cinemaTable'
     }
