@@ -41,6 +41,7 @@
     } from 'timers'
 
     import PersonApi from '@/api/personApi.js'
+    import CityApi from '@/api/cityApi.js'
 
     export default {
         name: 'cinema',
@@ -94,7 +95,10 @@
         },
         created() {
 
-
+            let params = {};
+            CityApi.cities(params).then(responseBody => {
+                console.log(responseBody);
+            })
 
             this.queryTable();
 

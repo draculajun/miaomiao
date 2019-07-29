@@ -3,7 +3,8 @@
         <Header title='我的'></Header>
         <Toolbar></Toolbar>
         <br>
-        {{getPersonid}} <!-- 存放从state中获得的personid，用于查询详单 -->
+        {{getPersonid}}
+        <!-- 存放从state中获得的personid，用于查询详单 -->
         <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
             <el-form-item label="姓名" prop="name">
                 <el-input ref="relFormid" v-if="false" v-model="ruleForm.id"></el-input>
@@ -112,6 +113,10 @@
                     PersonApi.person(id).then(responseBody => {
                         this.ruleForm = responseBody;
                     });
+                } else {
+                    if (this.$refs.ruleForm) {
+                        this.$refs.ruleForm.resetFields();
+                    }
                 }
             }
         },
