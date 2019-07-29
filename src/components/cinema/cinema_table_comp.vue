@@ -3,7 +3,7 @@
         <el-button type="primary" @click="addPerson">新增</el-button>
         <el-button type="primary" @click="queryTable">查询</el-button>
         <p></p>
-        <el-table :data="tableData" stripe border style="width: 100%">
+        <el-table :data="tableData" stripe style="width: 100%">
             <el-table-column fixed prop="date" label="日期">
             </el-table-column>
             <el-table-column prop="name" label="姓名">
