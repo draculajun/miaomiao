@@ -25,10 +25,7 @@
             CityApi.cities({}).then(responseBody => {
                 this.cities = responseBody;
                 if (this.mult && this.allowAll) {
-                    this.cities.unshift({
-                        name: '---ALL---',
-                        desc: '全部'
-                    });
+                    SelectApi.allowAll(this.cities);
                 }
                 this.cities.forEach(element => {
                     this.newCities.push(element.name);
@@ -38,7 +35,7 @@
         methods: {
             change: function (val) {
                 if (this.mult) {
-                    this.oldCities[0] = SelectApi.selectAll(this.oldCities, this.cities, this.newCities, val);
+                    this.oldCities[0] = SelectApi.getSelectedItems(this.oldCities, this.cities, this.newCities, val);
                     this.$emit('input', this.oldCities[0]);
                 } else {
                     this.$emit('input', val);

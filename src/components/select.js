@@ -1,6 +1,13 @@
 const SelectApi = {
 
-    selectAll(oldValue, list, newList, selectedValue) {
+    allowAll(list){
+        list.unshift({
+            name: '---ALL---',
+            desc: '全部'
+        });
+    },
+
+    getSelectedItems(oldValue, list, newList, selectedValue) {
         const allValues = [];
         // 保留所有值
         for (const item of list) {
