@@ -1,4 +1,4 @@
 export default {
-    path: '/mine',
+    path: '/mine/',
     component: () => import('@/views/mine/mine_view')
 }

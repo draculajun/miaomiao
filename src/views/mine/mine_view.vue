@@ -3,7 +3,6 @@
         <Header title='我的'></Header>
         <Toolbar></Toolbar>
         <br>
-        {{getPersonid}}
         <!-- 存放从state中获得的personid，用于查询详单 -->
         <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
             <el-form-item label="编号" prop="id" hidden>
@@ -21,7 +20,7 @@
             <el-form-item label="生日" required>
                 <el-col :span="11">
                     <el-form-item prop="date">
-                        <el-date-picker type="date" placeholder="选择生日" v-model="ruleForm.date" style="width: 100%;">
+                        <el-date-picker type="date" value-format="yyyy-MM-dd" placeholder="选择生日" v-model="ruleForm.date" style="width: 100%;">
                         </el-date-picker>
                     </el-form-item>
                 </el-col>
@@ -45,6 +44,7 @@
         eventBus
     } from '@/main.js'
     import PersonApi from '@/api/personApi.js'
+    import CityApi from '@/api/cityApi.js'
 
     export default {
         name: 'mine',
@@ -86,10 +86,9 @@
                         trigger: 'change'
                     }],
                     date: [{
-                        type: 'string',
                         required: true,
                         message: '请选择日期',
-                        trigger: 'change'
+                        trigger: 'change',
                     }],
                 }
             };
@@ -110,7 +109,6 @@
                             });
                         }
                     } else {
-                        console.log('error submit!!');
                         return false;
                     }
                 });
@@ -123,23 +121,26 @@
             },
         },
         created() {
-            this.cityDomainalnList = this.$store.state.cityDomainalnList;
-            this.$refs.ruleForm.resetFields();
+
+            CityApi.cities({}).then(responseBody => {
+                this.cityDomainalnList = responseBody;
+            })
+
+            if (this.$store.state.personInfo.personid != 0) {
+                PersonApi.person(this.$store.state.personInfo.personid).then(responseBody => {
+                    this.ruleForm = responseBody;
+                });
+            }
+
         },
         computed: {
-            //监听$store.state.personInfo.personid，有变动则调用接口查询Person详单（aaa其实用不着，但是在界面必须{{aaa}}定义，否则无法监听）
-            getPersonid() {
-                let id = this.$store.state.personInfo.personid;
-                if (id) {
-                    PersonApi.person(id).then(responseBody => {
-                        this.ruleForm = responseBody;
-                        console.log(this.$refs.relFormid);
-                    });
-                }
 
-            }
         },
+        watch: {
+            '$route'(to, from) {
 
+            },
+        }
     }
 </script>
 

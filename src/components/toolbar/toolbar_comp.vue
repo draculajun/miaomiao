@@ -31,7 +31,6 @@
         computed: {
             //获取当前路由渲染页面菜单
             defaultActive() {
-                console.log(this.$route.path);
                 return this.$route.path;
             }
         }

@@ -82,11 +82,17 @@
                     ...row
                 }).id;
                 this.$store.state.personInfo.personid = this.personInfo.personid;
-                this.$router.push("/mine");
+                // this.$router.push({path: `/mine/${this.personInfo.personid}`});
+                this.$router.push('mine');
             },
-            deletePerson(row){
-                PersonApi.delete(({...row}).id).then(responseBody=>{
+            deletePerson(row) {
+                PersonApi.delete(({
+                    ...row
+                }).id).then(responseBody => {
                     this.$message('删除成功');
+                    if (this.tableData.length == 1 && this.pageSize > 1) {
+                        this.currentPage = this.currentPage - 1;
+                    }
                     this.queryTable();
                 })
             },
@@ -103,15 +109,19 @@
             }
         },
         destroyed() {
-
+            this.$store.state.personInfo.personTableCurrentPage = this.currentPage;
+            this.$store.state.personInfo.personTablePageSize = this.pageSize;
         },
         created() {
 
-            let params = {};
-            CityApi.cities(params).then(responseBody => {
+            CityApi.cities({}).then(responseBody => {
                 this.$store.state.cityDomainalnList = responseBody;
             })
 
+            this.queryTable();
+
+            this.currentPage = this.$store.state.personInfo.personTableCurrentPage || this.currentPage;
+            this.pageSize = this.$store.state.personInfo.personTablePageSize || this.pageSize;
             this.queryTable();
 
         },
