@@ -35,6 +35,12 @@
 
         </el-form>
 
+        <City :mult="true" v-model="mutCities1"></City>
+        <br>
+        <City :mult="true" :allowAll="true" v-model="mutCities2"></City>
+        <br>
+        <City :mult="true" :allowAll="true" v-model="mutCities3"></City>
+
         <Footer></Footer>
     </div>
 </template>
@@ -60,6 +66,9 @@
         },
         data() {
             return {
+                mutCities1: ['SH'],
+                mutCities2: ['SH', 'BJ'],
+                mutCities3: ['SH'],
                 cityDomainalnList: [],
                 selectValue: 'SH',
                 detail: '',
