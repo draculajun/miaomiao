@@ -35,11 +35,11 @@
 
         </el-form>
 
-        <City :mult="true" v-model="mutCities1"></City>
+        <City :multiple="true" v-model="mutCities1"></City>
         <br>
-        <City :mult="true" :allowAll="true" v-model="mutCities2"></City>
+        <City :multiple="true" :allowAll="true" v-model="mutCities2"></City>
         <br>
-        <City :mult="true" :allowAll="true" v-model="mutCities3"></City>
+        <City :multiple="true" :allowAll="true" :filterable="true" v-model="mutCities3"></City>
 
         <Footer></Footer>
     </div>
