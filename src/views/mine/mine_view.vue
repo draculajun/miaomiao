@@ -12,15 +12,17 @@
                 <el-input v-model="ruleForm.name" style="width: 30%;"></el-input>
             </el-form-item>
             <el-form-item label="省份" prop="city">
-                <el-select v-model="ruleForm.city" placeholder="请选择省份">
+                <!-- <el-select v-model="ruleForm.city" placeholder="请选择省份">
                     <el-option v-for="item in cityDomainalnList" :label="item.desc" :value="item.name" :key="item.name">
                     </el-option>
-                </el-select>
+                </el-select> -->
+                <City v-model="ruleForm.city"></City>
             </el-form-item>
             <el-form-item label="生日" required>
                 <el-col :span="11">
                     <el-form-item prop="date">
-                        <el-date-picker type="date" value-format="yyyy-MM-dd" placeholder="选择生日" v-model="ruleForm.date" style="width: 100%;">
+                        <el-date-picker type="date" value-format="yyyy-MM-dd" placeholder="选择生日" v-model="ruleForm.date"
+                            style="width: 100%;">
                         </el-date-picker>
                     </el-form-item>
                 </el-col>
@@ -30,6 +32,7 @@
                 <el-button type="primary" @click="submitForm('ruleForm')">保存</el-button>
                 <el-button @click="resetForm('ruleForm')">重置</el-button>
             </el-form-item>
+
         </el-form>
 
         <Footer></Footer>
@@ -45,17 +48,20 @@
     } from '@/main.js'
     import PersonApi from '@/api/personApi.js'
     import CityApi from '@/api/cityApi.js'
+    import City from '@/components/city'
 
     export default {
         name: 'mine',
         components: {
             Header,
             Toolbar,
-            Footer
+            Footer,
+            City
         },
         data() {
             return {
                 cityDomainalnList: [],
+                selectValue: 'SH',
                 detail: '',
                 ruleForm: {
                     id: '',
@@ -119,6 +125,11 @@
             addPerson() {
                 this.$refs['ruleForm'].resetFields();
             },
+            selectFunc(value) {
+                // this.selectValue2 = value
+                console.log(this.selectValue)
+                // console.log(this.selectValue2)
+            }
         },
         created() {
 
