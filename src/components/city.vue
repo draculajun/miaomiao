@@ -9,6 +9,7 @@
 
 <script>
     import CityApi from '@/api/cityApi.js'
+    import SelectApi from '@/components/select.js'
 
     export default {
         name: 'city',
@@ -17,7 +18,7 @@
             return {
                 oldCities: [],
                 cities: [],
-                searchCities: [],
+                newCities: [],
             }
         },
         mounted() {
@@ -30,48 +31,18 @@
                     });
                 }
                 this.cities.forEach(element => {
-                    this.searchCities.push(element.name);
+                    this.newCities.push(element.name);
                 });
             })
         },
         methods: {
             change: function (val) {
-
                 if (this.mult) {
-                    const allValues = [];
-                    // 保留所有值
-                    for (const item of this.cities) {
-                        allValues.push(item.name)
-                    }
-                    // 用来储存上一次的值，可以进行对比
-                    const oldVal = this.oldCities.length === 1 ? this.oldCities[0] : [];
-                    // 若是全部选择
-                    if (val.includes('---ALL---')) this.searchCities = allValues;
-                    // 取消全部选中 上次有 当前没有 表示取消全选
-                    if (oldVal.includes('---ALL---') && !val.includes('---ALL---')) this.searchCities = [];
-                    // 点击非全部选中 需要排除全部选中 以及 当前点击的选项
-                    // 新老数据都有全部选中
-                    if (oldVal.includes('---ALL---') && val.includes('---ALL---')) {
-                        const index = val.indexOf('---ALL---');
-                        val.splice(index, 1); // 排除全选选项
-                        this.searchCities = val;
-                    }
-                    // 全选未选 但是其他选项全部选上 则全选选上 上次和当前 都没有全选
-                    if (!oldVal.includes('---ALL---') && !val.includes('---ALL---')) {
-                        if (val.length === allValues.length - 1) {
-                            this.searchCities = ['---ALL---'].concat(val)
-                        } else {
-                            this.searchCities = val;
-                        }
-                    }
-                    // 储存当前最后的结果 作为下次的老数据
-                    this.oldCities[0] = this.searchCities;
-
+                    this.oldCities[0] = SelectApi.selectAll(this.oldCities, this.cities, this.newCities, val);
                     this.$emit('input', this.oldCities[0]);
                 } else {
                     this.$emit('input', val);
                 }
-
             },
         }
     }
