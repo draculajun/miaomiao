@@ -34,7 +34,7 @@
                 if (this.multiple) {
                     this.$emit('input', SelectApi.getSelectedItems(this.oldCityKeys, this.citiesList, newCityKeys, 'name'));
                 } else {
-                    this.$emit('input', val);
+                    this.$emit('input', newCityKeys);
                 }
             },
         }

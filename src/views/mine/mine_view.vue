@@ -40,7 +40,7 @@
         <City :multiple="true" :allowAll="true" v-model="mutCities2"></City>
         <br>
         <City :multiple="true" :allowAll="true" :filterable="true" v-model="mutCities3"></City>
-
+        
         <Footer></Footer>
     </div>
 </template>
@@ -70,8 +70,6 @@
                 mutCities2: ['SH', 'BJ'],
                 mutCities3: ['SH'],
                 cityDomainalnList: [],
-                selectValue: 'SH',
-                detail: '',
                 ruleForm: {
                     id: '',
                     name: '',
@@ -134,11 +132,6 @@
             addPerson() {
                 this.$refs['ruleForm'].resetFields();
             },
-            selectFunc(value) {
-                // this.selectValue2 = value
-                console.log(this.selectValue)
-                // console.log(this.selectValue2)
-            }
         },
         created() {
 
@@ -146,8 +139,8 @@
                 this.cityDomainalnList = responseBody;
             })
 
-            if (this.$store.state.personInfo.personid != 0) {
-                PersonApi.person(this.$store.state.personInfo.personid).then(responseBody => {
+            if (this.$store.state.person.personInfo.personid != 0) {
+                PersonApi.person(this.$store.state.person.personInfo.personid).then(responseBody => {
                     this.ruleForm = responseBody;
                 });
             }
@@ -161,6 +154,7 @@
 
             },
         }
+        
     }
 </script>
 

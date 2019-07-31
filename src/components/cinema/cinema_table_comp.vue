@@ -70,7 +70,7 @@
                 });
             },
             queryPersonDetail(row) {
-                this.$store.state.personInfo.personid = row.id;
+                this.$store.state.person.personInfo.personid = row.id;
                 // this.$router.push({path: `/mine/${this.personInfo.personid}`});
                 this.$router.push('mine');
             },
@@ -96,8 +96,8 @@
             }
         },
         destroyed() {
-            this.$store.state.personInfo.personTableCurrentPage = this.currentPage;
-            this.$store.state.personInfo.personTablePageSize = this.pageSize;
+            this.$store.state.person.personInfo.personTableCurrentPage = this.currentPage;
+            this.$store.state.person.personInfo.personTablePageSize = this.pageSize;
         },
         created() {
 
@@ -107,8 +107,8 @@
 
             this.queryTable();
 
-            this.currentPage = this.$store.state.personInfo.personTableCurrentPage || this.currentPage;
-            this.pageSize = this.$store.state.personInfo.personTablePageSize || this.pageSize;
+            this.currentPage = this.$store.state.person.personInfo.personTableCurrentPage || this.currentPage;
+            this.pageSize = this.$store.state.person.personInfo.personTablePageSize || this.pageSize;
             this.queryTable();
 
         },
