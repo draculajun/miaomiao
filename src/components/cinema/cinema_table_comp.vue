@@ -35,10 +35,6 @@
         eventBus
     } from '@/main.js'
 
-    import {
-        setTimeout
-    } from 'timers'
-
     import PersonApi from '@/api/personApi.js'
     import CityApi from '@/api/cityApi.js'
 
