@@ -1,9 +1,9 @@
 <template>
     <div>
         <!-- <h3 v-if="multiple">多选列表框</h3> -->
-        <el-select :multiple="multiple" :collapse-tags="multiple" :filterable="multiple" :value="value"
+        <el-select :value="value" :multiple="multiple" :collapse-tags="multiple" :filterable="filterable"
             @change="change($event)" placeholder="请选择省份">
-            <el-option v-for="item in cities" :label="item.desc" :value="item.name" :key="item.name"></el-option>
+            <el-option v-for="item in citiesList" :label="item.desc" :value="item.name" :key="item.name"></el-option>
         </el-select>
     </div>
 </template>
@@ -17,28 +17,22 @@
         props: ['value', 'multiple', 'allowAll', 'filterable'],
         data() {
             return {
-                oldCities: [],
-                cities: [],
-                newCities: [],
+                oldCityKeys: [],
+                citiesList: [],
             }
         },
         mounted() {
             CityApi.cities({}).then(responseBody => {
-                this.cities = responseBody;
+                this.citiesList = responseBody;
                 if (this.multiple && this.allowAll) {
-                    SelectApi.allowAll(this.cities);
+                    this.citiesList = SelectApi.allowAll(this.citiesList, 'name', 'desc');
                 }
-                this.cities.forEach(element => {
-                    this.newCities.push(element.name);
-                });
             })
         },
         methods: {
-            change: function (val) {
+            change: function (newCityKeys) {
                 if (this.multiple) {
-                    this.oldCities[0] = SelectApi.getSelectedItems(this.oldCities, this.cities, this.newCities,
-                    val);
-                    this.$emit('input', this.oldCities[0]);
+                    this.$emit('input', SelectApi.getSelectedItems(this.oldCityKeys, this.citiesList, newCityKeys, 'name'));
                 } else {
                     this.$emit('input', val);
                 }
