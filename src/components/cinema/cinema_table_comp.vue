@@ -47,11 +47,7 @@
                 currentPage: 1,
                 pageSize: 2,
                 total: 0,
-                pageSizes: [2, 4],
-                personInfo: {
-                    personid: ''
-                },
-                num: '',
+                pageSizes: [2, 4, 6],
             }
         },
         methods: {
@@ -74,17 +70,12 @@
                 });
             },
             queryPersonDetail(row) {
-                this.personInfo.personid = ({
-                    ...row
-                }).id;
-                this.$store.state.personInfo.personid = this.personInfo.personid;
+                this.$store.state.personInfo.personid = row.id;
                 // this.$router.push({path: `/mine/${this.personInfo.personid}`});
                 this.$router.push('mine');
             },
             deletePerson(row) {
-                PersonApi.delete(({
-                    ...row
-                }).id).then(responseBody => {
+                PersonApi.delete(row.id).then(responseBody => {
                     this.$message('删除成功');
                     if (this.tableData.length == 1 && this.pageSize > 1) {
                         this.currentPage = this.currentPage - 1;
