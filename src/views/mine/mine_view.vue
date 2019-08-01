@@ -40,7 +40,18 @@
         <City :multiple="true" :allowAll="true" v-model="mutCities2"></City>
         <br>
         <City :multiple="true" :allowAll="true" :filterable="true" v-model="mutCities3"></City>
-        
+
+        <br>
+        <el-form :model="form" ref="form" label-width="80px">
+            <el-upload class="upload-demo"  :actions="''" :http-request="uploadFile"
+                :on-preview="handlePreview" :on-remove="handleRemove" :before-remove="beforeRemove" multiple
+                :on-exceed="handleExceed" :file-list="fileList">
+                <el-button size="small" type="primary">点击上传</el-button>
+                <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
+            </el-upload>
+        </el-form>
+        <br>
+
         <Footer></Footer>
     </div>
 </template>
@@ -49,12 +60,16 @@
     import Header from '@/components/header/header_comp'
     import Toolbar from '@/components/toolbar/toolbar_comp'
     import Footer from '@/components/footer/footer_comp'
+
     import {
         eventBus
     } from '@/main.js'
+
     import PersonApi from '@/api/personApi.js'
     import CityApi from '@/api/cityApi.js'
     import City from '@/components/city'
+
+    import AttachmentApi from '@/api/attachment.js'
 
     export default {
         name: 'mine',
@@ -66,6 +81,7 @@
         },
         data() {
             return {
+                fileList: [],
                 mutCities1: ['SH'],
                 mutCities2: ['SH', 'BJ'],
                 mutCities3: ['SH'],
@@ -132,6 +148,31 @@
             addPerson() {
                 this.$refs['ruleForm'].resetFields();
             },
+
+            handleRemove(file, fileList) {
+                console.log('handleRemove');
+                console.log(file, fileList);
+            },
+            handlePreview(file) {
+                console.log('handlePreview');
+                console.log(file);
+            },
+            handleExceed(files, fileList) {
+                this.$message.warning(
+                    `当前限制选择 3 个文件，本次选择了 ${files.length} 个文件，共选择了 ${files.length + fileList.length} 个文件`);
+            },
+            beforeRemove(file, fileList) {
+                return this.$confirm(`确定移除 ${ file.name }？`);
+            },
+            uploadFile(e){
+                let fileObject = e.file;
+                let formData = new FormData();
+                formData.append("file", fileObject);
+                AttachmentApi.upload(formData, 'TICKET', 'TICKET', 299127).then(responseBody => {
+                    this.$message("上传成功");
+                })
+
+            }
         },
         created() {
 
@@ -145,6 +186,10 @@
                 });
             }
 
+            AttachmentApi.list('TICKET', 299127).then(responseBody => {
+                this.fileList = responseBody;
+            });
+
         },
         computed: {
 
@@ -154,7 +199,7 @@
 
             },
         }
-        
+
     }
 </script>
 

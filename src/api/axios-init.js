@@ -9,9 +9,11 @@ axios.defaults.crossDomain = true;
 
 axios.interceptors.request.use(
     config => {
-        config.data = JSON.stringify(config.data);
-        config.headers.token = 'AAA';
-        config.headers.appId = 'BBB';
+        if (Object.prototype.toString.call(config.data) != '[object FormData]') {   //求参数类型为FormData时，不需要转换为JSON字符串
+            config.data = JSON.stringify(config.data);
+        }
+        config.headers.appId = 'WEB';
+        config.headers.token = '0b812d4fc12e5c671c20361b220989ef';
         // if (localStorage.getItem("token")) {
         //     config.headers.token = localStorage.getItem("token");
         //     config.headers.appId = localStorage.getItem("appId");
