@@ -1,6 +1,6 @@
 <template>
     <div>
-        <Header title='文件操作'></Header>
+        <Header title='附件'></Header>
         <Toolbar></Toolbar>
         <br>
         <Attachment ownerTable='TICKET' docType='TICKET' ownerId='299126'></Attachment>

@@ -1,6 +1,6 @@
 <template>
     <div>
-        <Header title='喵喵电影'></Header>
+        <Header title='子路由'></Header>
         <Toolbar></Toolbar>
         <div id='content'>
             <el-menu router :default-active="defaultActive" class="el-menu-demo" mode="horizontal"

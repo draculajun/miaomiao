@@ -1,6 +1,6 @@
 <template>
     <div>
-        <Header title='影院'></Header>
+        <Header title='表格'></Header>
         <Toolbar></Toolbar>
         <br>
         <CinemaTable></CinemaTable>
