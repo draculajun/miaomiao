@@ -2,16 +2,19 @@
     <div>
         <el-menu router :default-active="defaultActive" class="el-menu-demo" mode="horizontal" @select="handleSelect">
             <el-menu-item index="/movie">
-                <i>电影</i>
+                <i>子路由</i>
             </el-menu-item>
             <el-menu-item index="/cinema">
-                <i>影院</i>
+                <i>表格</i>
             </el-menu-item>
             <el-menu-item index="/mine">
-                <i>我的</i>
+                <i>表单</i>
             </el-menu-item>
             <el-menu-item index="/file">
-                <i>文件操作</i>
+                <i>附件</i>
+            </el-menu-item>
+            <el-menu-item index="/multselect">
+                <i>下拉列表</i>
             </el-menu-item>
         </el-menu>
         <div class="line"></div>

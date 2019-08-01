@@ -4,6 +4,7 @@ import movieRouter from './movie/movie_router'
 import cinemaRouter from './cinema/cinema_router'
 import mineRouter from './mine/mine_router'
 import fileRouter from './file/file_router'
+import multSelectRouter from './multselect/mult_select_router'
 
 Vue.use(Router)
 
@@ -15,6 +16,6 @@ export default new Router({
     cinemaRouter,
     mineRouter,
     fileRouter,
-
+    multSelectRouter,
   ]
 })
