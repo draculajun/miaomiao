@@ -10,6 +10,9 @@
             <el-menu-item index="/mine">
                 <i>我的</i>
             </el-menu-item>
+            <el-menu-item index="/file">
+                <i>文件操作</i>
+            </el-menu-item>
         </el-menu>
         <div class="line"></div>
     </div>
