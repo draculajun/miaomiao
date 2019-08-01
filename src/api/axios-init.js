@@ -7,13 +7,16 @@ axios.defaults.headers.put['Content-Type'] = 'application/json; charset=utf-8';
 axios.defaults.crossDomain = true;
 // axios.defaults.withCredentials = true;  //设置cross跨域 并设置访问权限 允许跨域携带cookie信息
 
+localStorage.setItem('appId', 'WEB');
+localStorage.setItem('token', 'f97914cfea7458d0871c2d68515528e3');
+
 axios.interceptors.request.use(
     config => {
         if (Object.prototype.toString.call(config.data) != '[object FormData]') {   //求参数类型为FormData时，不需要转换为JSON字符串
             config.data = JSON.stringify(config.data);
         }
-        config.headers.appId = 'WEB';
-        config.headers.token = '0b812d4fc12e5c671c20361b220989ef';
+        config.headers.appId = localStorage.getItem("appId");
+        config.headers.token = localStorage.getItem("token");
         // if (localStorage.getItem("token")) {
         //     config.headers.token = localStorage.getItem("token");
         //     config.headers.appId = localStorage.getItem("appId");

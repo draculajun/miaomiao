@@ -47,7 +47,9 @@
                 :on-preview="handlePreview" :on-remove="handleRemove" :before-remove="beforeRemove" multiple
                 :on-exceed="handleExceed" :file-list="fileList">
                 <el-button size="small" type="primary">点击上传</el-button>
-                <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
+                <div slot="tip" class="el-upload__tip">
+                    <!-- 只能上传jpg/png文件，且不超过500kb -->
+                </div>
             </el-upload>
         </el-form>
         <br>
@@ -148,14 +150,12 @@
             addPerson() {
                 this.$refs['ruleForm'].resetFields();
             },
-
             handleRemove(file, fileList) {
-                console.log('handleRemove');
-                console.log(file, fileList);
+                this.deleteFile(file.docLinkSid);
             },
             handlePreview(file) {
-                console.log('handlePreview');
-                console.log(file);
+                console.log(file.url);
+                window.open(file.url);
             },
             handleExceed(files, fileList) {
                 this.$message.warning(
@@ -170,8 +170,18 @@
                 formData.append("file", fileObject);
                 AttachmentApi.upload(formData, 'TICKET', 'TICKET', 299127).then(responseBody => {
                     this.$message("上传成功");
+                    this.downloadList('TICKET', 299127);
                 })
-
+            },
+            downloadList(ownerTable, ownerId){
+                AttachmentApi.downloadList(ownerTable, ownerId).then(responseBody => {
+                    this.fileList = responseBody;
+                });
+            },
+            deleteFile(docLinkSid){
+                AttachmentApi.delete(docLinkSid).then(responseBody => {
+                    this.$message("删除成功");
+                })
             }
         },
         created() {
@@ -186,9 +196,7 @@
                 });
             }
 
-            AttachmentApi.list('TICKET', 299127).then(responseBody => {
-                this.fileList = responseBody;
-            });
+            this.downloadList('TICKET', 299127);
 
         },
         computed: {

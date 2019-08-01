@@ -26,15 +26,18 @@ const AttachmentApi = {
         });
     },
 
-    list(ownerTable, ownerId) {
+    downloadList(ownerTable, ownerId) {
         return new Promise((resolve, reject) => {
             axios.get(`${attachmentUrl}/${ownerTable}/${ownerId}`).then(responseBody => {
-                console.log(responseBody);
                 if (responseBody.status == 200 && responseBody.data.code == 'OK') {
                     let attachmentArr = [];
                     responseBody.data.list.forEach(element => {
                         let url = element.contextPath + element.URL + "&appId=WEB" + "&token=" + localStorage.getItem("token");
-                        attachmentArr.push({'name': element.description, url});
+                        attachmentArr.push({
+                            'name': element.description,
+                            'url': url,
+                            'docLinkSid': element.docLinkSid
+                        });
                     });
                     resolve(attachmentArr);
                 }
@@ -42,7 +45,19 @@ const AttachmentApi = {
                 reject(error);
             });
         });
-    }
+    },
+
+    delete(docLinkSid) {
+        return new Promise((resolve, reject) => {
+            axios.delete(`${attachmentUrl}/${docLinkSid}`).then(responseBody => {
+                if (responseBody.status == 200 && responseBody.data.code == 'OK') {
+                    resolve(responseBody);
+                }
+            }).catch(error => {
+                reject(error);
+            });
+        });
+    },
 
 }
 
