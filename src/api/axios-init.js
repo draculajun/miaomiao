@@ -12,7 +12,7 @@ axios.defaults.crossDomain = true;
 // axios.defaults.withCredentials = true;  //设置cross跨域 并设置访问权限 允许跨域携带cookie信息
 
 localStorage.setItem('appId', 'WEB');
-localStorage.setItem('token', '9a663b78b603c852503d33a199257270');
+localStorage.setItem('token', 'dbeaaea8fd6a2a16971c5f9968b46364');
 
 axios.interceptors.request.use(
     config => {
@@ -20,11 +20,9 @@ axios.interceptors.request.use(
         if (Object.prototype.toString.call(config.data) != '[object FormData]') { //求参数类型为FormData时，不需要转换为JSON字符串
             config.data = JSON.stringify(config.data);
         }
-        config.headers.appId = localStorage.getItem("appId");
-        config.headers.token = localStorage.getItem("token");
         if (localStorage.getItem("token")) {
-            config.headers.token = localStorage.getItem("token");
             config.headers.appId = localStorage.getItem("appId");
+            config.headers.token = localStorage.getItem("token");
         } else {
             endLoading();
             missToken();

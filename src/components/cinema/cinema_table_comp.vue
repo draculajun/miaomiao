@@ -37,6 +37,7 @@
 
     import PersonApi from '@/api/personApi.js'
     import CityApi from '@/api/cityApi.js'
+    import BaseApi from '@/api/api.js'
 
     export default {
         name: 'cinema',

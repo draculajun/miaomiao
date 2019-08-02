@@ -3,7 +3,7 @@ import axios from './axios-init'
 const BaseApi = {
 
     post(url, params) {
-        let promise = new Promise((resolve, reject) => {
+        return new Promise((resolve, reject) => {
             axios.post(url, params).then(responseBody => {
                 if (responseBody.status == 200 && responseBody.data.code == 200) {
                     resolve(responseBody.data.data);
@@ -13,11 +13,10 @@ const BaseApi = {
                 reject(error);
             });
         });
-        return promise;
     },
 
     put(url, params) {
-        let promise = new Promise((resolve, reject) => {
+        return new Promise((resolve, reject) => {
             axios.put(url, params).then(responseBody => {
                 if (responseBody.status == 200 && responseBody.data.code == 200) {
                     resolve(responseBody.data.data);
@@ -27,11 +26,10 @@ const BaseApi = {
                 reject(error);
             });
         });
-        return promise;
     },
 
     get(url) {
-        let promise = new Promise((resolve, reject) => {
+        return new Promise((resolve, reject) => {
             axios.get(url).then(responseBody => {
                 if (responseBody.status == 200 && responseBody.data.code == 200) {
                     resolve(responseBody.data.data);
@@ -41,11 +39,10 @@ const BaseApi = {
                 reject(error);
             });
         });
-        return promise;
     },
 
     delete(url) {
-        let promise = new Promise((resolve, reject) => {
+        return new Promise((resolve, reject) => {
             axios.delete(url).then(responseBody => {
                 if (responseBody.status == 200 && responseBody.data.code == 200) {
                     resolve(responseBody.data.data);
@@ -55,7 +52,19 @@ const BaseApi = {
                 reject(error);
             });
         });
-        return promise;
+    },
+
+    formPost(url, formData){
+        return new Promise((resolve, reject) => {
+            axios.post(url, formData).then(responseBody => {
+                console.log(responseBody);
+                if (responseBody.status == 200) {
+                    resolve(responseBody.data);
+                }
+            }).catch(error => {
+                reject(error);
+            });
+        })
     }
 
 
