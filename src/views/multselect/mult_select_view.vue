@@ -34,13 +34,10 @@
                 mutCities1: ['SH'],
                 mutCities2: ['SH', 'BJ'],
                 mutCities3: ['SH'],
-                cityDomainalnList: [],
             }
         },
         created() {
-            CityApi.cities({}).then(responseBody => {
-                this.cityDomainalnList = responseBody;
-            })
+            
         },
 
     }
