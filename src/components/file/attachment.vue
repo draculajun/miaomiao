@@ -19,7 +19,7 @@
 
     export default {
         name: 'attachment',
-        props: ['ownerTable', 'docType', 'ownerId', 'docLinkSid'],
+        props: ['ownerTable', 'docType', 'ownerId'],
         data() {
             return {
                 fileList: '',
