@@ -12,7 +12,7 @@ axios.defaults.crossDomain = true;
 // axios.defaults.withCredentials = true;  //设置cross跨域 并设置访问权限 允许跨域携带cookie信息
 
 localStorage.setItem('appId', 'WEB');
-localStorage.setItem('token', 'dbeaaea8fd6a2a16971c5f9968b46364');
+localStorage.setItem('token', '1f77cd9acf55968cd7b6a44a4c2025f7');
 
 axios.interceptors.request.use(
     config => {

@@ -16,6 +16,9 @@
             <el-menu-item index="/multselect">
                 <i>下拉列表</i>
             </el-menu-item>
+            <el-menu-item index="/dialog">
+                <i>对话框</i>
+            </el-menu-item>
         </el-menu>
         <div class="line"></div>
     </div>
